@@ -3,12 +3,12 @@ package com.swoc_nonnull.jotter;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
-import javafx.scene.Node;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -68,17 +68,20 @@ public class Entry extends Application {
 
         // close(Rectangle) which acts as a button when pressed, and it closes the application
         Rectangle close = new Rectangle(screenBounds.getWidth()/40, screenBounds.getHeight()/90, Color.RED);
+        close.setId("title_bar_items__close");
         close.setOnMouseClicked(mouseEvent -> System.exit(0));
         parent.getChildren().add(0, close);
 
         // min(Rectangle) which acts as a button when pressed, and it minimizes the stage(native window)
         Rectangle min = new Rectangle(screenBounds.getWidth()/40, screenBounds.getHeight()/90, Color.BLUE);
+        min.setId("title_bar_items__min");
         min.setTranslateX(close.getWidth()+close.getHeight());
         min.setOnMouseClicked(mouseEvent -> primaryStage.setIconified(true));
         parent.getChildren().add(1, min);
 
         // max(Rectangle) which acts as a button when pressed, and it maximizes the stage(native window)
         Rectangle max = new Rectangle(screenBounds.getWidth()/40, screenBounds.getHeight()/90, Color.BLUEVIOLET);
+        max.setId("title_bar_items__max");
         max.setTranslateX(min.getTranslateX()+min.getWidth()+min.getHeight());
         max.setOnMouseClicked(mouseEvent -> {
             if(isStageMaximized) {

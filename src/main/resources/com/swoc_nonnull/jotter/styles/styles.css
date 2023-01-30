@@ -1,3 +1,16 @@
 .root {
     -fx-background-color: rgb(22, 29, 41);
 }
+
+#title_bar_items__min {
+    -fx-focus-traversable: true;
+    -fx-effect: dropshadow(gaussian, BLUE, 100, 0.0, 0.0, 0.0);
+}
+#title_bar_items__max {
+    -fx-focus-traversable: true;
+    -fx-effect: dropshadow(gaussian, BLUEVIOLET, 100, 0.0, 0.0, 0.0);
+}
+#title_bar_items__close {
+    -fx-focus-traversable: true;
+    -fx-effect: dropshadow(gaussian, RED, 100, 0.0, 0.0, 0.0);
+}
