@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0593666-c502-4e11-b191-d395b838f323" name="Changes" comment="Creates a basic app layout">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/swoc_nonnull/jotter/Entry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/swoc_nonnull/jotter/Entry.java" afterDir="false" />
-    </list>
+    <list default="true" id="f0593666-c502-4e11-b191-d395b838f323" name="Changes" comment="Creates a basic app layout" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,7 +20,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="add-icon" />
       </map>
     </option>
   </component>
@@ -76,7 +73,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675025629085</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Adds an icon for the application">
+      <created>1675110604574</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1675110604574</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -92,6 +96,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Creates a basic app layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creates a basic app layout" />
+    <MESSAGE value="Adds an icon for the application" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adds an icon for the application" />
   </component>
 </project>
