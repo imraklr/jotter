@@ -26,7 +26,7 @@ public class Entry extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        File image = new File("src/main/resources/com/swoc_nonnull/jotter/styles/icons/icon_logo_jotter.png");
+        File image = new File("src/main/resources/com/swoc_nonnull/jotter/icons/icon_logo_jotter.png");
         primaryStage.getIcons().add(new Image("file:///"+image.getAbsolutePath().replace("\\", "/")));
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 
