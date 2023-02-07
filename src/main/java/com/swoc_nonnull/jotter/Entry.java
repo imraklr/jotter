@@ -128,7 +128,7 @@ public class Entry extends Application {
         cardAdder.setTranslateX(1100-radius-constant);
         cardAdder.setTranslateY(radius+constant);
         parent.getChildren().add(3, cardAdder);
-        parent.setOnMouseClicked(mouseEvent -> {
+        cardAdder.setOnMouseClicked(mouseEvent -> {
             // Add a card on the view
         });
 
