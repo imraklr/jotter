@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.swoc_nonnull.jotter/com.swoc_nonnull.jotter.HelloApplication</mainClass>
+                            <mainClass>com.swoc_nonnull.jotter/com.swoc_nonnull.jotter.Entry</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
