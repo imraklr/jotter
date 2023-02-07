@@ -14,3 +14,7 @@
     -fx-focus-traversable: true;
     -fx-effect: dropshadow(gaussian, RED, 100, 0.0, 0.0, 0.0);
 }
+
+#cardViewAdder {
+    -fx-focus-traversable: true;
+}

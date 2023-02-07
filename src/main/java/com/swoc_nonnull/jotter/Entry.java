@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -118,6 +119,18 @@ public class Entry extends Application {
             }
         });
         parent.getChildren().add(2, max);
+
+        // Initial sample radius and sample color
+        double radius = Math.sqrt(node_arcHeight*node_arcHeight + node_arcWidth*node_arcWidth);
+        Circle cardAdder = new Circle(radius , Color.YELLOW);
+        // no resize translateX value = initial scene size - radius - constant
+        double constant = node_arcHeight/2+node_arcWidth/2;
+        cardAdder.setTranslateX(1100-radius-constant);
+        cardAdder.setTranslateY(radius+constant);
+        parent.getChildren().add(3, cardAdder);
+        parent.setOnMouseClicked(mouseEvent -> {
+            // Add a card on the view
+        });
 
         arcIfy(parent);
 
