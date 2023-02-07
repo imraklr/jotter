@@ -7,7 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -58,7 +58,7 @@ public class Entry extends Application {
     private double initStageWidth, initStageHeight, initStageSetX, initStageSetY;
     private Parent makeUI() {
 
-        FlowPane parent = new FlowPane();
+        Pane parent = new Pane();
 
         // minimum width and height for parent
         parent.setMinWidth(1100);
