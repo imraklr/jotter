@@ -15,6 +15,17 @@
     -fx-effect: dropshadow(gaussian, RED, 100, 0.0, 0.0, 0.0);
 }
 
+#card_adder_circle {
+    -fx-opacity: 0.5;
+    -fx-fill: radial-gradient(radius 100%, #550099, #5500FF);
+}
+#card_adder_plus_vertical {
+    -fx-fill: rgba(0.1, 0.1, 0.1, 0.5);
+}
+#card_adder_plus_horizontal {
+    -fx-fill: rgba(0.1, 0.1, 0.1, 0.5);
+}
+
 #cardViewAdder {
     -fx-focus-traversable: true;
 }

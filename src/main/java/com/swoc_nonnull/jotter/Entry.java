@@ -3,14 +3,17 @@ package com.swoc_nonnull.jotter;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -122,15 +125,40 @@ public class Entry extends Application {
 
         // Initial sample radius and sample color
         double radius = Math.sqrt(node_arcHeight*node_arcHeight + node_arcWidth*node_arcWidth);
-        Circle cardAdder = new Circle(radius , Color.YELLOW);
+        Circle cardAdder = new Circle(radius);
+        cardAdder.setId("card_adder_circle");
         // no resize translateX value = initial scene size - radius - constant
         double constant = node_arcHeight/2+node_arcWidth/2;
         cardAdder.setTranslateX(1100-radius-constant);
         cardAdder.setTranslateY(radius+constant);
-        parent.getChildren().add(3, cardAdder);
+
+        Rectangle plus_vertical = new Rectangle();
+        plus_vertical.setId("card_adder_plus_vertical");
+        plus_vertical.setWidth(cardAdder.getRadius()/5);
+        plus_vertical.setHeight(cardAdder.getTranslateY());
+        plus_vertical.setTranslateX(cardAdder.getTranslateX()-plus_vertical.getWidth()/2);
+        plus_vertical.setTranslateY(cardAdder.getTranslateY()-(cardAdder.getRadius()-cardAdder.getRadius()/4));
+        Rectangle plus_horizontal = new Rectangle();
+        plus_horizontal.setId("card_adder_plus_horizontal");
+        plus_horizontal.setWidth(cardAdder.getRadius()/5);
+        plus_horizontal.setHeight(cardAdder.getTranslateY());
+        plus_horizontal.setTranslateX(cardAdder.getTranslateX()-plus_horizontal.getWidth()/2);
+        plus_horizontal.setTranslateY(cardAdder.getTranslateY()-(cardAdder.getRadius()-cardAdder.getRadius()/4));
+        plus_horizontal.setRotate(90);
+        // attaching actions
         cardAdder.setOnMouseClicked(mouseEvent -> {
             // Add a card on the view
         });
+        plus_horizontal.setOnMouseClicked(mouseEvent -> {
+            // Add a card on the view
+        });
+        plus_vertical.setOnMouseClicked(mouseEvent -> {
+            // Add a card on the view
+        });
+
+        parent.getChildren().add(3, cardAdder);
+        parent.getChildren().add(4, plus_vertical);
+        parent.getChildren().add(5, plus_horizontal);
 
         arcIfy(parent);
 
