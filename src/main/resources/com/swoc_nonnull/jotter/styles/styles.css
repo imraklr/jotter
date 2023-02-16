@@ -1,5 +1,5 @@
 .root {
-    -fx-background-color: rgb(22, 29, 41);
+    -fx-background-color: rgb(255, 234, 244);
 }
 
 #title_bar_items__min {
@@ -17,7 +17,7 @@
 
 #card_adder_circle {
     -fx-opacity: 0.5;
-    -fx-fill: radial-gradient(radius 100%, #550099, #5500FF);
+    -fx-fill: rgb(143, 120, 107);
 }
 #card_adder_plus_vertical {
     -fx-fill: rgba(0.1, 0.1, 0.1, 0.5);
