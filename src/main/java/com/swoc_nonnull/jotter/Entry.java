@@ -20,8 +20,8 @@ import java.io.File;
 
 public class Entry extends Application {
     private Stage primaryStage;
-    // mainResizer is the resizer that positions resizer for the stage
 
+    // mainResizer is the resizer that positions resizer for the stage
     private Resizer mainResizer;
     private Rectangle close, min, max, plus_vertical, plus_horizontal;
     private Circle menu;
@@ -45,8 +45,6 @@ public class Entry extends Application {
         scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        // Add other functionalities
 
         // Add stylesheet
         File f = new File("src/main/resources/com/swoc_nonnull/jotter/styles/styles.css");
@@ -114,7 +112,7 @@ public class Entry extends Application {
         shape.setArcHeight(node_arc_value);
         parent.setShape(shape);
 
-        // Have a stack pane in the background on which canvas are brought
+        // Have a stack pane in the background in which TextArea is kept
         StackPane jotAreaHolder = new StackPane();
         // Setting jotAreaHolder's preferred width and height
         jotAreaHolder.setPrefWidth(primaryStage.getWidth()-node_arc_value);
@@ -182,7 +180,7 @@ public class Entry extends Application {
         parent.getChildren().add(currentParentsChildIndex++, max);
 
         NodeUserData menu_nodeUserData = new NodeUserData(true, false, true, true);
-        // Initial sample radius and sample color
+        // Initial sample radius
         double radius = Math.sqrt(node_arc_value*node_arc_value*8);
         menu = new Circle(radius);
         menu.setUserData(menu_nodeUserData);
