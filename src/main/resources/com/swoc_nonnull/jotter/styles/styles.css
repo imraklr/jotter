@@ -1,5 +1,5 @@
 .root {
-    -fx-background-color: rgb(255, 234, 244);
+    -fx-background-color: rgb(11, 46, 36);
 }
 
 #title_bar_items__min {
@@ -15,17 +15,17 @@
     -fx-effect: dropshadow(gaussian, RED, 100, 0.0, 0.0, 0.0);
 }
 
-#card_adder_circle {
+#menu_circle {
     -fx-opacity: 0.5;
-    -fx-fill: rgb(143, 120, 107);
+    -fx-fill: rgb(227, 186, 2);
 }
-#card_adder_plus_vertical {
+#menu_plus_vertical {
     -fx-fill: rgba(0.1, 0.1, 0.1, 0.5);
 }
-#card_adder_plus_horizontal {
+#menu_plus_horizontal {
     -fx-fill: rgba(0.1, 0.1, 0.1, 0.5);
 }
 
-#cardViewAdder {
+#menu_circle {
     -fx-focus-traversable: true;
 }

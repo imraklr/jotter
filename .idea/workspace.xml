@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0593666-c502-4e11-b191-d395b838f323" name="Changes" comment="Adds label(+ sign) as a rectangle to the circle(cardAdder)">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/swoc_nonnull/jotter/NodeUserData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/swoc_nonnull/jotter/JotArea.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/swoc_nonnull/jotter/styles/jot_area.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/swoc_nonnull/jotter/Entry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/swoc_nonnull/jotter/Entry.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/swoc_nonnull/jotter/Resizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/swoc_nonnull/jotter/Resizer.java" afterDir="false" />
@@ -27,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="create_text_area" />
       </map>
     </option>
   </component>

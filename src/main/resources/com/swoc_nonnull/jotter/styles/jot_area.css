@@ -1,0 +1,16 @@
+.text-area {
+    -fx-text-fill: rgb(25, 112, 86);
+    -fx-highlight-fill: rgb(85, 107, 15);
+    -fx-font-size: 18px;
+    text-area-background: rgb(11, 46, 36);
+    -fx-border-width: 0px;
+}
+
+.text-area .content {
+    -fx-background-color: text-area-background ;
+}
+
+.text-area:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
