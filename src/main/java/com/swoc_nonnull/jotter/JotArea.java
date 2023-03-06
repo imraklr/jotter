@@ -1,5 +1,9 @@
 package com.swoc_nonnull.jotter;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
@@ -8,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 
@@ -26,7 +31,7 @@ class JotArea extends TextArea {
 
         screenBounds = Screen.getPrimary().getBounds();
         // Width and height
-        setWidth(stage.getWidth()-Entry.node_arc_value);
+        setWidth(stage.getWidth());
         setHeight(stage.getHeight()-Entry.node_arc_value);
         // Setting same width and height for the parent(StackPane) as well
         {
@@ -50,15 +55,15 @@ class JotArea extends TextArea {
     }
 
     private void makeUI() {
-        setText("Epsem Flora Tiana");
+        setText("Love");
     }
 
     private void attachListeners() {
         // listen for stage width and height changes
         stage.widthProperty().addListener((observableValue, number, t1) -> {
-            setWidth(t1.doubleValue()-Entry.node_arc_value);
+            setWidth(t1.doubleValue());
             if(parent instanceof StackPane stackPane)
-                stackPane.setPrefWidth(t1.doubleValue()-Entry.node_arc_value);
+                stackPane.setPrefWidth(t1.doubleValue());
         });
         stage.heightProperty().addListener((observableValue, number, t1) -> {
             setHeight(t1.doubleValue()-Entry.node_arc_value);

@@ -115,10 +115,9 @@ public class Entry extends Application {
         // Have a stack pane in the background in which TextArea is kept
         StackPane jotAreaHolder = new StackPane();
         // Setting jotAreaHolder's preferred width and height
-        jotAreaHolder.setPrefWidth(primaryStage.getWidth()-node_arc_value);
+        jotAreaHolder.setPrefWidth(primaryStage.getWidth());
         jotAreaHolder.setPrefHeight(primaryStage.getHeight()-node_arc_value);
         // Setting jotAreaHolder's translateX and translateY
-        jotAreaHolder.setTranslateX(node_arc_value/2);
         jotAreaHolder.setTranslateY(node_arc_value/2);
         JotArea jotArea = new JotArea(primaryStage, jotAreaHolder);
         parent.getChildren().add(currentParentsChildIndex++, jotAreaHolder);
