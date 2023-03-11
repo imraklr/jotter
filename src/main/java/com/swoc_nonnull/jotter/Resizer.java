@@ -21,7 +21,7 @@ abstract class Resizer {
     private final Parent parent;
     double lastX, lastY;
 
-    Resizer(Stage stage, Parent parent, NodeUserData nodeUserData, double xLimit, double yLimit) {
+    Resizer(Stage stage, Parent parent, NodeUserData nodeUserData) {
         // If stage is not available, parent must be available
         this.parent = parent;
         if(nodeUserData==null)
@@ -34,14 +34,6 @@ abstract class Resizer {
             componentWidth = parent.getLayoutBounds().getWidth()*0.8;
             componentHeight = parent.getLayoutBounds().getHeight()*0.8;
         }
-        if (xLimit == -1)
-            xLimit = componentWidth;
-        else
-            xLimit *= 0.2;
-        if (yLimit == -1)
-            yLimit = componentHeight;
-        else
-            yLimit *= 0.4;
         makeUI();
         performActions();
     }
@@ -53,231 +45,118 @@ abstract class Resizer {
         // making resizerUI transparent
         resizerUI.setOpacity(.0);
 
-        if(stage!=null) {
-            // setting size
-            resizerUI.setWidth(stage.getScene().getWidth() * 0.03);
-            resizerUI.setHeight(stage.getScene().getHeight() * 0.03);
-            // positioning
-            resizerUI.setTranslateX(stage.getScene().getWidth()-resizerUI.getWidth());
-            resizerUI.setTranslateY(stage.getScene().getHeight()-resizerUI.getHeight());
+        // setting size
+        resizerUI.setWidth(stage.getScene().getWidth() * 0.03);
+        resizerUI.setHeight(stage.getScene().getHeight() * 0.03);
+        // positioning
+        resizerUI.setTranslateX(stage.getScene().getWidth()-resizerUI.getWidth());
+        resizerUI.setTranslateY(stage.getScene().getHeight()-resizerUI.getHeight());
 
-            // Adding circles
-            Circle[] circles = {
-                    new Circle(stage.getScene().getWidth() * 0.002, Color.WHITE),
-                    new Circle(stage.getScene().getWidth() * 0.002, Color.YELLOW),
-                    new Circle(stage.getScene().getWidth() * 0.002, Color.PEACHPUFF),
-                    new Circle(stage.getScene().getWidth() * 0.002, Color.CORNFLOWERBLUE),
-                    new Circle(stage.getScene().getWidth() * 0.002, Color.FIREBRICK),
-                    new Circle(stage.getScene().getWidth() * 0.002, Color.PALEGREEN)
-            };
+        // Adding circles
+        Circle[] circles = {
+                new Circle(stage.getScene().getWidth() * 0.002, Color.WHITE),
+                new Circle(stage.getScene().getWidth() * 0.002, Color.YELLOW),
+                new Circle(stage.getScene().getWidth() * 0.002, Color.PEACHPUFF),
+                new Circle(stage.getScene().getWidth() * 0.002, Color.CORNFLOWERBLUE),
+                new Circle(stage.getScene().getWidth() * 0.002, Color.FIREBRICK),
+                new Circle(stage.getScene().getWidth() * 0.002, Color.PALEGREEN)
+        };
 
-            // positioning circles
-            double twentyPercent_X = resizerUI.getWidth() * 0.2;
-            double twentyPercent_Y = resizerUI.getHeight() * 0.2;
-            double resizerUI_endX = resizerUI.getTranslateX() + resizerUI.getWidth() - twentyPercent_X;
-            double resizerUI_endY = resizerUI.getTranslateY() + resizerUI.getHeight() - twentyPercent_Y;
+        // positioning circles
+        double twentyPercent_X = resizerUI.getWidth() * 0.2;
+        double twentyPercent_Y = resizerUI.getHeight() * 0.2;
+        double resizerUI_endX = resizerUI.getTranslateX() + resizerUI.getWidth() - twentyPercent_X;
+        double resizerUI_endY = resizerUI.getTranslateY() + resizerUI.getHeight() - twentyPercent_Y;
 
-            // baseline 3 circles
-            {
-                circles[0].setTranslateX(resizerUI_endX);
-                circles[0].setTranslateY(resizerUI_endY);
-                resizerUI_endX -= twentyPercent_X;
-                circles[1].setTranslateX(resizerUI_endX);
-                circles[1].setTranslateY(resizerUI_endY);
-                resizerUI_endX -= twentyPercent_X;
-                circles[2].setTranslateX(resizerUI_endX);
-                circles[2].setTranslateY(resizerUI_endY);
-                resizerUI_endX += 2 * twentyPercent_X;
-            }
-
-            // one step above baseline(2 circles)
-            {
-                resizerUI_endY -= twentyPercent_Y;
-                circles[3].setTranslateY(resizerUI_endY);
-                circles[3].setTranslateX(resizerUI_endX);
-                resizerUI_endX -= twentyPercent_X;
-                circles[4].setTranslateX(resizerUI_endX);
-                circles[4].setTranslateY(resizerUI_endY);
-                resizerUI_endX += twentyPercent_X;
-            }
-
-            // top circle
-            {
-                resizerUI_endY -= twentyPercent_Y;
-                circles[5].setTranslateX(resizerUI_endX);
-                circles[5].setTranslateY(resizerUI_endY);
-            }
-
-            resizer = new Group();
-            resizer.getChildren().addAll(circles);
-            resizer.getChildren().add(resizerUI);
-
-            if(parent instanceof Pane)
-                ((Pane) parent).getChildren().add(resizer);
+        // baseline 3 circles
+        {
+            circles[0].setTranslateX(resizerUI_endX);
+            circles[0].setTranslateY(resizerUI_endY);
+            resizerUI_endX -= twentyPercent_X;
+            circles[1].setTranslateX(resizerUI_endX);
+            circles[1].setTranslateY(resizerUI_endY);
+            resizerUI_endX -= twentyPercent_X;
+            circles[2].setTranslateX(resizerUI_endX);
+            circles[2].setTranslateY(resizerUI_endY);
+            resizerUI_endX += 2 * twentyPercent_X;
         }
-        else
-            if(parent instanceof Pane p) {
-                // setting resizerUI as a child of parent `p`
-                p.getChildren().add(resizerUI);
-                // setting size
-                resizerUI.setWidth(p.getWidth() * 0.03);
-                resizerUI.setHeight(p.getHeight() * 0.03);
-                // positioning
-                resizerUI.setTranslateX(p.getTranslateX() + p.getWidth() - resizerUI.getWidth());
-                resizerUI.setTranslateY(p.getTranslateY() + p.getWidth() - resizerUI.getHeight());
 
-                // Adding circles
-                Circle[] circles = {
-                        new Circle(p.getWidth() * 0.002, Color.WHITE),
-                        new Circle(p.getWidth() * 0.002, Color.YELLOW),
-                        new Circle(p.getWidth() * 0.002, Color.PEACHPUFF),
-                        new Circle(p.getWidth() * 0.002, Color.CORNFLOWERBLUE),
-                        new Circle(p.getWidth() * 0.002, Color.FIREBRICK),
-                        new Circle(p.getWidth() * 0.002, Color.PALEGREEN)
-                };
+        // one step above baseline(2 circles)
+        {
+            resizerUI_endY -= twentyPercent_Y;
+            circles[3].setTranslateY(resizerUI_endY);
+            circles[3].setTranslateX(resizerUI_endX);
+            resizerUI_endX -= twentyPercent_X;
+            circles[4].setTranslateX(resizerUI_endX);
+            circles[4].setTranslateY(resizerUI_endY);
+            resizerUI_endX += twentyPercent_X;
+        }
 
-                // positioning circles
-                double twentyPercent_X = resizerUI.getWidth() * 0.2;
-                double twentyPercent_Y = resizerUI.getHeight() * 0.2;
-                double resizerUI_endX = resizerUI.getTranslateX() + resizerUI.getWidth() - twentyPercent_X;
-                double resizerUI_endY = resizerUI.getTranslateY() + resizerUI.getHeight() - twentyPercent_Y;
+        // top circle
+        {
+            resizerUI_endY -= twentyPercent_Y;
+            circles[5].setTranslateX(resizerUI_endX);
+            circles[5].setTranslateY(resizerUI_endY);
+        }
 
-                // baseline 3 circles
-                {
-                    circles[0].setTranslateX(resizerUI_endX);
-                    circles[0].setTranslateY(resizerUI_endY);
-                    resizerUI_endX -= twentyPercent_X;
-                    circles[1].setTranslateX(resizerUI_endX);
-                    circles[1].setTranslateY(resizerUI_endY);
-                    resizerUI_endX -= twentyPercent_X;
-                    circles[2].setTranslateX(resizerUI_endX);
-                    circles[2].setTranslateY(resizerUI_endY);
-                    resizerUI_endX += 2 * twentyPercent_X;
-                }
+        resizer = new Group();
+        resizer.getChildren().addAll(circles);
+        resizer.getChildren().add(resizerUI);
 
-                // one step above baseline(2 circles)
-                {
-                    resizerUI_endY -= twentyPercent_Y;
-                    circles[3].setTranslateY(resizerUI_endY);
-                    circles[3].setTranslateX(resizerUI_endX);
-                    resizerUI_endX -= twentyPercent_X;
-                    circles[4].setTranslateX(resizerUI_endX);
-                    circles[4].setTranslateY(resizerUI_endY);
-                    resizerUI_endX += twentyPercent_X;
-                }
-
-                // top circle
-                {
-                    resizerUI_endY -= twentyPercent_Y;
-                    circles[5].setTranslateX(resizerUI_endX);
-                    circles[5].setTranslateY(resizerUI_endY);
-                }
-
-                resizer = new Group();
-                resizer.getChildren().addAll(circles);
-                resizer.getChildren().add(resizerUI);
-
-                p.getChildren().add(resizer);
-            }
+        if(parent instanceof Pane)
+            ((Pane) parent).getChildren().add(resizer);
     }
 
     private void performActions() {
         performBasics();
 
         AtomicBoolean wasPressed = new AtomicBoolean(false);
-        if(stage!=null) {
-            resizer.setOnMouseDragExited(mouseDragEvent -> stage.getScene().setCursor(Cursor.DEFAULT));
-            resizer.setOnMouseReleased(mouseEvent -> stage.getScene().setCursor(Cursor.DEFAULT));
-            resizer.setOnMouseEntered(mouseEvent -> stage.getScene().setCursor(Cursor.SE_RESIZE));
-            resizer.setOnMouseExited(mouseEvent -> stage.getScene().setCursor(Cursor.DEFAULT));
-            resizer.setOnMousePressed(mouseEvent -> {
-                stage.getScene().setCursor(Cursor.SE_RESIZE);
-                if (!wasPressed.get()) {
-                    lastX = mouseEvent.getX();
-                    lastY = mouseEvent.getY();
-                    wasPressed.set(true);
-                } else {
-                    lastX = mouseEvent.getSceneX();
-                    lastY = mouseEvent.getSceneY();
-                }
-            });
-            resizer.setOnMouseDragged(mouseEvent -> {
-                double deltaX = mouseEvent.getSceneX() - lastX;
-                double deltaY = mouseEvent.getSceneY() - lastY;
-                double newX = resizer.getTranslateX() + deltaX;
-                double newY = resizer.getTranslateY() + deltaY;
-                if (resizerUI_data.isMovable()) {
-                    // then look for change in size of stage along-with limits
-                    // Note that here limits are specified by componentWidth and componentHeight
-                    if (componentWidth < stage.getWidth() + deltaX)
-                        resizer.setTranslateX(newX);
-                    if (componentHeight < stage.getHeight() + deltaY)
-                        resizer.setTranslateY(newY);
-                }
-                if (componentWidth < stage.getWidth() + deltaX)
-                    stage.setWidth(stage.getWidth() + deltaX);
-                if (componentHeight < stage.getHeight() + deltaY)
-                    stage.setHeight(stage.getHeight() + deltaY);
+        resizer.setOnMouseDragExited(mouseDragEvent -> stage.getScene().setCursor(Cursor.DEFAULT));
+        resizer.setOnMouseReleased(mouseEvent -> stage.getScene().setCursor(Cursor.DEFAULT));
+        resizer.setOnMouseEntered(mouseEvent -> stage.getScene().setCursor(Cursor.SE_RESIZE));
+        resizer.setOnMouseExited(mouseEvent -> stage.getScene().setCursor(Cursor.DEFAULT));
+        resizer.setOnMousePressed(mouseEvent -> {
+            stage.getScene().setCursor(Cursor.SE_RESIZE);
+            if (!wasPressed.get()) {
+                lastX = mouseEvent.getX();
+                lastY = mouseEvent.getY();
+                wasPressed.set(true);
+            } else {
                 lastX = mouseEvent.getSceneX();
                 lastY = mouseEvent.getSceneY();
+            }
+        });
+        resizer.setOnMouseDragged(mouseEvent -> {
+            double deltaX = mouseEvent.getSceneX() - lastX;
+            double deltaY = mouseEvent.getSceneY() - lastY;
+            double newX = resizer.getTranslateX() + deltaX;
+            double newY = resizer.getTranslateY() + deltaY;
+            if (resizerUI_data.isMovable()) {
+                // then look for change in size of stage along-with limits
+                // Note that here limits are specified by componentWidth and componentHeight
+                if (componentWidth < stage.getWidth() + deltaX)
+                    resizer.setTranslateX(newX);
+                if (componentHeight < stage.getHeight() + deltaY)
+                    resizer.setTranslateY(newY);
+            }
+            if (componentWidth < stage.getWidth() + deltaX)
+                stage.setWidth(stage.getWidth() + deltaX);
+            if (componentHeight < stage.getHeight() + deltaY)
+                stage.setHeight(stage.getHeight() + deltaY);
+            lastX = mouseEvent.getSceneX();
+            lastY = mouseEvent.getSceneY();
 
-                // Re-calibrate corners(arcs) and set it for parent
-                if (parent instanceof Pane) {
-                    Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-                    double ratio = screenBounds.getWidth() > screenBounds.getHeight() ?
-                            20 * (screenBounds.getHeight() / screenBounds.getWidth()) :
-                            20 * (screenBounds.getWidth() / screenBounds.getHeight());
-                    ((Rectangle) ((Pane) parent).getShape()).setArcWidth(ratio);
-                    ((Rectangle) ((Pane) parent).getShape()).setArcHeight(ratio);
-                }
-            });
-        }
-        else {
-            resizer.setOnMouseDragExited(mouseDragEvent -> parent.getScene().setCursor(Cursor.DEFAULT));
-            resizer.setOnMouseReleased(mouseEvent -> parent.getScene().setCursor(Cursor.DEFAULT));
-            resizer.setOnMouseEntered(mouseEvent -> parent.getScene().setCursor(Cursor.SE_RESIZE));
-            resizer.setOnMouseExited(mouseEvent -> parent.getScene().setCursor(Cursor.DEFAULT));
-            resizer.setOnMousePressed(mouseEvent -> {
-                parent.getScene().setCursor(Cursor.SE_RESIZE);
-                if (!wasPressed.get()) {
-                    lastX = mouseEvent.getX();
-                    lastY = mouseEvent.getY();
-                    wasPressed.set(true);
-                } else {
-                    lastX = mouseEvent.getSceneX();
-                    lastY = mouseEvent.getSceneY();
-                }
-            });
-            resizer.setOnMouseDragged(mouseEvent -> {
-                double deltaX = mouseEvent.getSceneX() - lastX;
-                double deltaY = mouseEvent.getSceneY() - lastY;
-                double newX = resizer.getTranslateX() + deltaX;
-                double newY = resizer.getTranslateY() + deltaY;
-                if(parent instanceof Pane p) {
-                    if (resizerUI_data.isMovable()) {
-                        // then look for change in size of parent(p) along-with limits
-                        // Note that here limits are specified by componentWidth and componentHeight
-                        if (componentWidth < p.getWidth() + deltaX)
-                            resizer.setTranslateX(newX);
-                        if (componentHeight < p.getHeight() + deltaY)
-                            resizer.setTranslateY(newY);
-                    }
-                    if (componentWidth < p.getWidth() + deltaX)
-                        p.setPrefWidth(p.getWidth() + deltaX);
-                    if (componentHeight < p.getHeight() + deltaY)
-                        p.setPrefHeight(p.getHeight() + deltaY);
-                    lastX = mouseEvent.getSceneX();
-                    lastY = mouseEvent.getSceneY();
-
-                    // Re-calibrate corners(arcs) and set it for parent
-                    double ratio = p.getWidth() > p.getHeight() ?
-                            20 * (p.getHeight() / p.getWidth()) :
-                            20 * (p.getWidth() / p.getHeight());
-                    ((Rectangle) (p).getShape()).setArcWidth(ratio);
-                    ((Rectangle) (p).getShape()).setArcHeight(ratio);
-                }
-            });
-        }
+            // Re-calibrate corners(arcs) and set it for parent
+            if (parent instanceof Pane) {
+                Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+                double ratio = screenBounds.getWidth() > screenBounds.getHeight() ?
+                        20 * (screenBounds.getHeight() / screenBounds.getWidth()) :
+                        20 * (screenBounds.getWidth() / screenBounds.getHeight());
+                ((Rectangle) ((Pane) parent).getShape()).setArcWidth(ratio);
+                ((Rectangle) ((Pane) parent).getShape()).setArcHeight(ratio);
+            }
+        });
+        stage.maximizedProperty().addListener((observable, oldValue, newValue) -> resizer.setVisible(!newValue));
     }
 
     /*
@@ -290,9 +169,4 @@ abstract class Resizer {
     */
     abstract void performBasics();
 
-    // getter for resizer
-    public Group getResizer() {
-        return resizer;
-    }
-    public static Group getResizer(Resizer ob) { return ob.resizer; }
 }

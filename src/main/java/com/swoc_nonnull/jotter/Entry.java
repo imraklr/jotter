@@ -62,8 +62,12 @@ public class Entry extends Application {
         // register those nodes which are supposed to move
         // move menu button and group 'resizer'
         // mainResizer is the resizer that positions resizer for the stage
+        // listen to stage changes
+        // Add a listener to the stage width property
+        // register those nodes which are supposed to move
+        // move menu button and group 'resizer'
         @SuppressWarnings("unused")
-        Resizer mainResizer = new Resizer(primaryStage, parent, null, screenBounds.getWidth(), screenBounds.getHeight()) {
+        Resizer mainResizer = new Resizer(primaryStage, parent, null) {
             @Override
             void performBasics() {
                 // listen to stage changes
@@ -166,6 +170,7 @@ public class Entry extends Application {
                 ((Rectangle) parent.getShape()).setArcWidth(node_arc_value);
                 ((Rectangle) parent.getShape()).setArcHeight(node_arc_value);
                 isStageMaximized = false;
+                primaryStage.setMaximized(false);
             } else {
                 // store initial width and height
                 initStageHeight = primaryStage.getHeight();
