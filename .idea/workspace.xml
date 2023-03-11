@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0593666-c502-4e11-b191-d395b838f323" name="Changes" comment="Update comment in `Entry.java` file.">
+    <list default="true" id="f0593666-c502-4e11-b191-d395b838f323" name="Changes" comment="Modernize the look and feel of `TextArea`">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/swoc_nonnull/jotter/MenuStage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/swoc_nonnull/jotter/Entry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/swoc_nonnull/jotter/Entry.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/swoc_nonnull/jotter/JotArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/swoc_nonnull/jotter/JotArea.java" afterDir="false" />
@@ -54,6 +56,9 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors&quot;
   }
 }</component>

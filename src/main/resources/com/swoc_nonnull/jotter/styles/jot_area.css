@@ -1,7 +1,7 @@
 .text-area {
     -fx-text-fill: rgb(25, 112, 86);
     -fx-highlight-fill: rgb(85, 107, 15);
-    -fx-font-size: 18px;
+    -fx-font-size: 22px;
     text-area-background: rgb(11, 46, 36);
     -fx-border-width: 0px;
 }

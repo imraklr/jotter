@@ -1,6 +1,7 @@
 package com.swoc_nonnull.jotter;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -17,14 +18,17 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.File;
+import java.io.FileWriter;
 
 public class Entry extends Application {
     private Stage primaryStage;
 
-    // mainResizer is the resizer that positions resizer for the stage
-    private Resizer mainResizer;
-    private Rectangle close, min, max, plus_vertical, plus_horizontal;
-    private Circle menu;
+    private Rectangle close;
+    static Rectangle plus_vertical;
+    static Rectangle plus_horizontal;
+    static Circle menu;
+    private MenuStage menuStage; // This MenuStage is single and created at the start of this application. This holds
+    // the menu when the menu button(Circle) is clicked.
 
     public static void main(String[] args) {
         launch(args);
@@ -53,7 +57,13 @@ public class Entry extends Application {
          * Add resizer which will help in the resizing of stage.
          * It may not be stored in any variable(referenced by a variable) as its use is not known
         */
-        mainResizer = new Resizer(primaryStage, parent, null, screenBounds.getWidth(), screenBounds.getHeight()) {
+        // listen to stage changes
+        // Add a listener to the stage width property
+        // register those nodes which are supposed to move
+        // move menu button and group 'resizer'
+        // mainResizer is the resizer that positions resizer for the stage
+        @SuppressWarnings("unused")
+        Resizer mainResizer = new Resizer(primaryStage, parent, null, screenBounds.getWidth(), screenBounds.getHeight()) {
             @Override
             void performBasics() {
                 // listen to stage changes
@@ -61,26 +71,22 @@ public class Entry extends Application {
                 primaryStage.widthProperty().addListener((observableValue, oldWidth, newWidth) -> {
                     // register those nodes which are supposed to move
                     // move menu button and group 'resizer'
-                    if(menu.getUserData() instanceof NodeUserData nodeUserData)
-                        if(nodeUserData.isMovable()) {
-                            double radius = Math.sqrt(node_arc_value*node_arc_value*8);
-                            menu.setTranslateX(newWidth.doubleValue()- radius-node_arc_value);
+                    if (menu.getUserData() instanceof NodeUserData nodeUserData)
+                        if (nodeUserData.isMovable()) {
+                            double radius = Math.sqrt(node_arc_value * node_arc_value * 8);
+                            menu.setTranslateX(newWidth.doubleValue() - radius - node_arc_value);
                             plus_vertical.setTranslateX(
-                                    newWidth.doubleValue()-radius-node_arc_value- plus_vertical.getWidth()/2
+                                    newWidth.doubleValue() - radius - node_arc_value - plus_vertical.getWidth() / 2
                             );
                             plus_horizontal.setTranslateX(
-                                    newWidth.doubleValue()-radius-node_arc_value- plus_horizontal.getWidth()/2
+                                    newWidth.doubleValue() - radius - node_arc_value - plus_horizontal.getWidth() / 2
                             );
                         }
-                });
-
-                // Add a listener to the stage height property
-                primaryStage.heightProperty().addListener((observableValue, oldHeight, newHeight) -> {
-                    // placeholder
                 });
             }
         };
         arcIfy(parent);
+        finalizeUILayoutWithEvents();
     }
 
     static double node_arc_value;
@@ -93,10 +99,11 @@ public class Entry extends Application {
                 20*(screenBounds.getWidth()/screenBounds.getHeight());
     }
 
-    private boolean isStageMaximized = false;
+    private static boolean isStageMaximized = false;
     private double initStageWidth, initStageHeight, initStageSetX, initStageSetY;
     private static int currentParentsChildIndex;
     static { currentParentsChildIndex = 0; }
+    static JotArea jotArea;
     private Parent makeUI() {
 
         Pane parent = new Pane();
@@ -119,7 +126,8 @@ public class Entry extends Application {
         jotAreaHolder.setPrefHeight(primaryStage.getHeight()-node_arc_value);
         // Setting jotAreaHolder's translateX and translateY
         jotAreaHolder.setTranslateY(node_arc_value/2);
-        JotArea jotArea = new JotArea(primaryStage, jotAreaHolder);
+        jotArea = new JotArea(primaryStage, jotAreaHolder);
+        jotArea.setId("textArea");
         parent.getChildren().add(currentParentsChildIndex++, jotAreaHolder);
 
         parent.setStyle("-fx-background-fill: rgba(.0, .0, .0, .0)");
@@ -130,11 +138,10 @@ public class Entry extends Application {
         close = new Rectangle(screenBounds.getWidth()/40, screenBounds.getHeight()/90, Color.RED);
         close.setUserData(min_max_close_Data);
         close.setId("title_bar_items__close");
-        close.setOnMouseClicked(mouseEvent -> System.exit(0));
         parent.getChildren().add(currentParentsChildIndex++, close);
 
         // min(Rectangle) which acts as a button when pressed, and it minimizes the stage(native window)
-        min = new Rectangle(screenBounds.getWidth()/40, screenBounds.getHeight()/90, Color.BLUE);
+        Rectangle min = new Rectangle(screenBounds.getWidth() / 40, screenBounds.getHeight() / 90, Color.BLUE);
         min.setUserData(min_max_close_Data);
         min.setId("title_bar_items__min");
         min.setTranslateX(close.getWidth()+close.getHeight());
@@ -142,13 +149,14 @@ public class Entry extends Application {
         parent.getChildren().add(currentParentsChildIndex++, min);
 
         // max(Rectangle) which acts as a button when pressed, and it maximizes the stage(native window)
-        max = new Rectangle(screenBounds.getWidth()/40, screenBounds.getHeight()/90, Color.BLUEVIOLET);
+        Rectangle max = new Rectangle(screenBounds.getWidth() / 40, screenBounds.getHeight() / 90, Color.BLUEVIOLET);
         max.setUserData(min_max_close_Data);
         max.setId("title_bar_items__max");
-        max.setTranslateX(min.getTranslateX()+min.getWidth()+min.getHeight());
+        max.setTranslateX(min.getTranslateX()+ min.getWidth()+ min.getHeight());
         max.setOnMouseClicked(mouseEvent -> {
             if(isStageMaximized) {
                 // restore
+                primaryStage.setMaximized(false);
                 primaryStage.setWidth(initStageWidth);
                 primaryStage.setHeight(initStageHeight);
                 // re-position
@@ -174,6 +182,7 @@ public class Entry extends Application {
                 primaryStage.setX(0);
                 primaryStage.setY(0);
                 isStageMaximized = true;
+                primaryStage.setMaximized(true);
             }
         });
         parent.getChildren().add(currentParentsChildIndex++, max);
@@ -203,22 +212,74 @@ public class Entry extends Application {
         plus_horizontal.setTranslateX(menu.getTranslateX()-plus_horizontal.getWidth()/2);
         plus_horizontal.setTranslateY(menu.getTranslateY()-(menu.getRadius()-menu.getRadius()/3));
         plus_horizontal.setRotate(90);
-        // attaching actions
-        menu.setOnMouseClicked(mouseEvent -> {
-            // Generate menu
-        });
-        plus_horizontal.setOnMouseClicked(mouseEvent -> {
-            // Generate menu
-        });
-        plus_vertical.setOnMouseClicked(mouseEvent -> {
-            // Generate menu
-        });
 
         parent.getChildren().add(currentParentsChildIndex++, menu);
         parent.getChildren().add(currentParentsChildIndex++, plus_vertical);
         parent.getChildren().add(currentParentsChildIndex++, plus_horizontal);
 
         return parent;
+    }
+
+    private void finalizeUILayoutWithEvents() {
+        // Create a new stage for menu
+        menuStage = new MenuStage(
+                primaryStage // The current stage(primaryStage) is provided as a constructor parameter
+                , menu // The menu button(Circle) also in the constructor parameter
+        );
+        // attaching actions
+        menu.setOnMouseClicked(mouseEvent -> {
+            // Display menu
+            if(!menuStage.isShowing()) {
+                menu.setVisible(false);
+                plus_vertical.setVisible(false);
+                plus_horizontal.setVisible(false);
+                MenuStage.toolStage.show();
+                menuStage.show();
+            }
+        });
+        plus_horizontal.setOnMouseClicked(mouseEvent -> {
+            // Display menu
+            if(!menuStage.isShowing()) {
+                menu.setVisible(false);
+                plus_vertical.setVisible(false);
+                plus_horizontal.setVisible(false);
+                MenuStage.toolStage.show();
+                menuStage.show();
+            }
+        });
+        plus_vertical.setOnMouseClicked(mouseEvent -> {
+            // Display menu
+            if(!menuStage.isShowing()) {
+                menu.setVisible(false);
+                plus_vertical.setVisible(false);
+                plus_horizontal.setVisible(false);
+                MenuStage.toolStage.show();
+                menuStage.show();
+            }
+        });
+        // Stage closing events
+        close.setOnMouseClicked(mouseEvent -> {
+            mouseEvent.consume();
+            // Perform clean-ups
+            // Restore jot_Area.css(Re-Write)
+            try(FileWriter fileWriter = new FileWriter(JotArea.filePath.substring(6))) {
+                for(String line: JotArea.getDefaultCssStrings())
+                    fileWriter.write(line+System.lineSeparator());
+            }catch (Exception ignored) {}
+            Platform.exit();
+            System.exit(0);
+        });
+        primaryStage.setOnCloseRequest(e-> {
+            e.consume();
+            // Perform clean-ups
+            // Restore jot_Area.css(Re-Write)
+            try(FileWriter fileWriter = new FileWriter(JotArea.filePath.substring(6))) {
+                for(String line: JotArea.getDefaultCssStrings())
+                    fileWriter.write(line+System.lineSeparator());
+            }catch (Exception ignored) {}
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
     /*
